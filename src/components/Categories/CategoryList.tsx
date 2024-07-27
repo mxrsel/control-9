@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Category} from "../../types.ts";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
+import {deleteCategory} from "../../store/Categories/categoryThunks.ts";
 
 
 const CategoryList: React.FC = () => {
@@ -13,6 +14,12 @@ const CategoryList: React.FC = () => {
         setEditCategory(category);
         setOpenForm(true);
     }
+
+    const handleDelete = (id: string) => {
+        if (window.confirm('You want to delete this category?')) {
+            dispatch(deleteCategory(id));
+        }
+    }
     return (
         <div>
             <button>add Category</button>
@@ -21,7 +28,8 @@ const CategoryList: React.FC = () => {
                 <li key={category.id}>
                     {category.name}
                     {category.type}
-                    <button onClick={() => handleEdit(category)}>Edit</button>
+                    <button className='btn btn-primary' onClick={() => handleEdit(category)}>Edit</button>
+                    <button className='btn btn-danger' onClick={() => handleDelete(category.id)}>Delete</button>
                 </li>
             ))}
         </div>
