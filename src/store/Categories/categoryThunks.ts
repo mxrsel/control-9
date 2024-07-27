@@ -23,19 +23,29 @@ export const fetchCategories = createAsyncThunk<Category[], void, {state: RootSt
     }
 );
 
-export const createCategory = createAsyncThunk<void, ApiCategory, {state: RootState}>('categories/create',
+export const createCategory = createAsyncThunk<Category, ApiCategory, {state: RootState}>(
+    'categories/create',
     async (category) => {
-    await axiosApi.post('/categories.json', category);
-    });
+        const response = await axiosApi.post('/categories.json', category);
+        return { ...category, id: response.data.name };
+    }
+);
 
-export const updateCategory = createAsyncThunk<void, Category, {state: RootState}>('categories/update',
-    async (category) => {
-    const {id, ...updatedCategory} = category;
-    await axiosApi.put ('categories/' + id +'.json', updatedCategory);
-    });
 
-export const deleteCategory = createAsyncThunk<void, string, {state: RootState}>('categories/delete',
+export const updateCategory = createAsyncThunk<Category, { id: string; category: Category }, {state: RootState}>(
+    'categories/update',
+    async ({ id, category }) => {
+        await axiosApi.put('/categories/' + id +'.json', category);
+        return { ...category, id };
+    }
+);
+
+
+export const deleteCategory = createAsyncThunk<string, string, {state: RootState}>(
+    'categories/delete',
     async (id) => {
-    await axiosApi.delete('categories/' + id + 'json');
-    });
+        await axiosApi.delete('/categories/' + id + '.json');
+        return id;
+    }
+);
 
