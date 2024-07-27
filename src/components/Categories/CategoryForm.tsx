@@ -26,15 +26,15 @@ const CategoryForm: React.FC<Props> = ({ category}) => {
         if (category) {
             dispatch(updateCategory({ ...category, name, type }));
         } else {
-            dispatch(createCategory({ name, type })); // Ensures all fields are included
+            dispatch(createCategory({ name, type }));
         }
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='text-center' onSubmit={handleSubmit}>
             <div>
                 <label>Name:</label>
-                <input
+                <input className='input mb-2'
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -44,13 +44,13 @@ const CategoryForm: React.FC<Props> = ({ category}) => {
 
             <div>
                 <label>Type:</label>
-                <select value={type} onChange={e => setType(e.target.value as 'income' | 'expense')}>
+                <select className='form-select-sm select mb-2' value={type} onChange={e => setType(e.target.value as 'income' | 'expense')}>
                     <option value='income'>Income</option>
                     <option value='expense'>Expense</option>
                 </select>
             </div>
-            <button type="submit">Save</button>
-            <button type='submit'>Cancel</button>
+            <button className='btn btn-success' type="submit">Save</button>
+            <button className='btn btn-danger' type='submit'>Cancel</button>
         </form>
     );
 };

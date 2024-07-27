@@ -34,7 +34,6 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ transaction, onClose 
                 createdAt: new Date().toISOString(),
             }));
         }
-        onClose();
     };
 
     return (
@@ -52,7 +51,7 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ transaction, onClose 
                     value={categoryId}
                     onChange={e => setCategoryId(e.target.value)}
                 >
-                    <option value="">Select Category</option>
+
                     {categories.filter(cat => cat.type === type).map(cat => (
                         <option key={cat.id} value={cat.id}>{cat.name}</option>
                     ))}

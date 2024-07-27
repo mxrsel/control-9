@@ -35,11 +35,10 @@ const TransactionForm: React.FC<TransactionFormProps> = ({ transaction, onClose 
                 createdAt: new Date().toISOString(),
             }));
         }
-        onClose();
     };
 
     return (
-        <form onSubmit={handleSubmit}>
+        <form className='d-flex justify-content-center' onSubmit={handleSubmit}>
             <div>
                 <label>Type:</label>
                 <select value={type} onChange={e => setType(e.target.value as 'income' | 'expense')}>

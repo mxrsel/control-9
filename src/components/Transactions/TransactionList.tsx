@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './Transactions.css'
 
 import dayjs from 'dayjs';
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
@@ -30,31 +31,40 @@ const TransactionList: React.FC = () => {
     const totalAmount = transactions.reduce((sum, tx) => sum + tx.amount, 0);
 
     return (
-        <div>
-            <button onClick={() => { setEditingTransaction(null); setIsFormOpen(true); }}>
-                Add Transaction
-            </button>
+        <div >
+
             {isFormOpen && (
                 <TransactionForm
                     transaction={editingTransaction}
                     onClose={() => setIsFormOpen(false)}
                 />
             )}
-            <div>
+
+            <div className='d-flex justify-content-between'>
                 <h2>Total: {totalAmount} KGS</h2>
+
+
+            <button className='btn btn-dark mt-2' onClick={() => {
+                setEditingTransaction(null);
+                setIsFormOpen(true);
+            }}>
+                Add Transaction
+            </button>
             </div>
-            <ul>
+            <ul className='d-flex justify-content-center'>
                 {transactions
                     .slice()
                     .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
                     .map(transaction => (
-                        <li key={transaction.id}>
-                            {dayjs(transaction.createdAt).format('DD.MM.YYYY HH:mm:ss')} - {transaction.amount > 0 ? '+' : '-'}{Math.abs(transaction.amount)} KGS
-                            <button onClick={() => handleEdit(transaction)}>Edit</button>
-                            <button onClick={() => handleDelete(transaction.id)}>Delete</button>
+                        <li className='listItem border-1 p-2 bg-dark text-light' key={transaction.id}>
+                            {dayjs(transaction.createdAt).format('DD.MM.YYYY HH:mm:ss')} KGS
+                            <button className='btn btn-primary ms-2' onClick={() => handleEdit(transaction)}>Edit</button>
+                            <button className='btn btn-danger ms-2' onClick={() => handleDelete(transaction.id)}>Delete</button>
                         </li>
                     ))}
             </ul>
+
+
         </div>
     );
 };

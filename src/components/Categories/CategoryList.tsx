@@ -27,7 +27,7 @@ const CategoryList: React.FC = () => {
     }
     return (
         <div>
-            <button onClick={() => {setEditCategory(null); setOpenForm(true)}}>add Category</button>
+            <button className='btn btn-dark mt-2 ms-2' onClick={() => {setEditCategory(null); setOpenForm(true)}}>add Category</button>
             {openForm && (
                 <CategoryForm
                 category={editCategory}
