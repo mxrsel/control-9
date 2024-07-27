@@ -1,7 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Category} from "../../types.ts";
 import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
-import {deleteCategory} from "../../store/Categories/categoryThunks.ts";
+import {deleteCategory, fetchCategories} from "../../store/Categories/categoryThunks.ts";
+import CategoryForm from "./CategoryForm.tsx";
 
 
 const CategoryList: React.FC = () => {
@@ -9,6 +10,10 @@ const CategoryList: React.FC = () => {
     const categories = useAppSelector(state => state.categories.categories);
     const [openForm, setOpenForm] = useState(false);
     const [editCategory, setEditCategory] = useState<Category | null>(null);
+
+    useEffect(() => {
+        dispatch(fetchCategories());
+    }, [dispatch]);
 
     const handleEdit = (category: Category) => {
         setEditCategory(category);
@@ -22,7 +27,13 @@ const CategoryList: React.FC = () => {
     }
     return (
         <div>
-            <button>add Category</button>
+            <button onClick={() => {setEditCategory(null); setOpenForm(true)}}>add Category</button>
+            {openForm && (
+                <CategoryForm
+                category={editCategory}
+                onClose={() => setOpenForm(false)}
+                />
+            )}
 
             {categories.map(category => (
                 <li key={category.id}>
