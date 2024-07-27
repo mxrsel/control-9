@@ -16,4 +16,4 @@ const transactionsSlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {}
-})
+});
